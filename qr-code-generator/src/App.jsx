@@ -6,18 +6,20 @@ function App() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [profession, setProfession] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('')
   const [portfolioUrl, setPortfolioUrl] = useState('');
   const [qrCode, setQrCode] = useState('');
   const [loading, setLoading] = useState(false);
-
+  
+  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
     setTimeout(() => {
-      const qrData = `Name: ${firstName} ${lastName}, Profession: ${profession}, Portfolio: ${portfolioUrl}`;
+      const qrData = `Name: ${firstName} ${lastName}, Profession: ${profession}, PhoneNumber: ${phoneNumber}, Portfolio: ${portfolioUrl}`;
       setQrCode(qrData);
       setLoading(false);
-    }, 2000); // Simulate loading time
+    }, 2000);
   };
 
   return (
@@ -58,6 +60,17 @@ function App() {
           />
         </div>
         <div className="mb-4">
+          <label className="block text-gray-700">Phone Number:</label>
+          <input
+            type="text"
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
+            placeholder="Enter phone number"
+            className="border-2 border-gray-300 p-2 w-full"
+            required
+          />
+        </div>
+        <div className="mb-4">
           <label className="block text-gray-700">Portfolio URL:</label>
           <input
             type="url"
@@ -73,6 +86,7 @@ function App() {
           className="bg-blue-500 text-white p-2 w-full mt-4"
           disabled={loading}
         >
+          {/** Show loading text when genarating QR code **/}
           {loading ? 'Generating...' : 'Generate QR Code'}
         </button>
       </form>
